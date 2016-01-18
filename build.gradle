@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+apply from: "$rootDir/gradle/gretty.plugin" 
+apply from: "$rootDir/gradle/libraries.gradle"
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile libs.resteasyRs
+    compile libs.resteasySpring
+    compile libs.springBoot
+    compile libs.resteasyJackson2
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}
+
+war {
+    baseName = 'orange-magic-template'
+    version =  '0.0.1-SNAPSHOT'
+}
+
+gretty {
+	port = 8080
+	contextPath = '/'
+	servletContainer = 'jetty9'
+}
